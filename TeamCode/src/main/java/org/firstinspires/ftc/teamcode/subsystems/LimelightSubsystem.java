@@ -6,10 +6,6 @@ import com.qualcomm.hardware.limelightvision.Limelight3A;
 
 import java.util.Optional;
 
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
-
 public class LimelightSubsystem extends SubsystemBase {
     
     private Limelight3A limelight3A;
