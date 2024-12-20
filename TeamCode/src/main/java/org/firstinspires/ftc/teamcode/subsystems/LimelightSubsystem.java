@@ -1,28 +1,31 @@
-package subsystems;
+package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.teamcode.math_utils.Point;
 
 import java.util.Optional;
 
-public class LimelightSubsystem extends SubsystemBase {
+public class LimelightSubsystem  {
     
-    private Limelight3A limelight3A;
+    private final Limelight3A limelight3A;
 
     /**
      * Constructs a limelight subsytem.
      */
-    public LimelightSubsystem( final Limelight3A limelight3A )
+    public LimelightSubsystem( final HardwareMap hwMap )
     {
-        this.limelight3A = limelight3A;
-        limelight3A.setPollRateHz(50);
+        this.limelight3A = hwMap.get(Limelight3A.class, "limelight");
+        limelight3A.setPollRateHz(11);
+        limelight3A.pipelineSwitch(0);
         limelight3A.start();
     }
 
     /**
      * Updates the limelight's pose with the robot yaw. This is needed for MT2 stable detection. REQUIRED.
-     * @param yaw the yaw aligned with the field map
+     * @param yaw the yaw aligned with the field map in Degrees
      */
     public void updateWithPose( double yaw )
     {
@@ -41,7 +44,7 @@ public class LimelightSubsystem extends SubsystemBase {
     public Optional<Point> getRobotPose()
     {
         LLResult result = limelight3A.getLatestResult();
-        if( !result.isValid() || result.getBotposeAvgDist() > 2 ) // 2 meters max dist
+        if( result == null || !result.isValid() || result.getBotposeAvgDist() > 2 ) // 2 meters max dist
             return Optional.empty();
        return Optional.of(new Point(result.getBotpose_MT2().getPosition().x, result.getBotpose_MT2().getPosition().y));
     }
