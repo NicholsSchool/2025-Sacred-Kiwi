@@ -43,14 +43,13 @@ public class DriveTele extends OpMode{
     @Override
     public void loop() {
         controller.update();
-        //drivetrain.update();
+        drivetrain.update();
 
-        //drivetrain.drive(controller.leftStick.toVector(), controller.rightStick.x.value());
+        drivetrain.drive(controller.leftStick.toVector(), controller.rightStick.x.value());
 
 
-        //telemetry.addData("pose", drivetrain.getPose());
+        telemetry.addData("pose", drivetrain.getPose());
 
-        //telemetry.addData("loop time", loopTime.time());
 
         telemetry.addData("Yaw", drivetrain.otos.getPosition().h);
         limelight.updateWithPose(gyro.getAngle());
@@ -59,7 +58,6 @@ public class DriveTele extends OpMode{
         telemetry.addData("Limelight x", robotPose.isPresent() ? robotPose.get().x : "No AT");
         telemetry.addData("Limelight y", robotPose.isPresent() ? robotPose.get().y : "No AT");
         telemetry.addData("Redux Gyro out", gyro.getAngle());
-        //loopTime.reset();
         telemetry.update();
     }
 

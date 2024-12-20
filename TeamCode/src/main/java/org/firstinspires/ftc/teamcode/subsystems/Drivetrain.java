@@ -18,8 +18,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * Robot Drivetrain
  */
 public class Drivetrain implements DriveConstants {
-//    private final DcMotorEx leftDrive, rightDrive, backDrive,
-//            frontOdometry, leftOdometry, rightOdometry;
+    private final DcMotorEx leftDrive, rightDrive, backDrive,
+            frontOdometry, leftOdometry, rightOdometry;
     private int previousLeftPosition, previousRightPosition, previousFrontPosition;
     private double previousHeading, imuOffset, targetHeading;
     public final SparkFunOTOS otos;
@@ -31,13 +31,13 @@ public class Drivetrain implements DriveConstants {
      * @param initialPose where the bot initially starts
      */
     public Drivetrain(HardwareMap hwMap, RobotPose initialPose) {
-//        leftDrive = hwMap.get(DcMotorEx.class, "leftDrive");
-//        rightDrive = hwMap.get(DcMotorEx.class, "rightDrive");
-//        backDrive = hwMap.get(DcMotorEx.class, "backDrive");
-//
-//        frontOdometry = hwMap.get(DcMotorEx.class, "frontDead");
-//        leftOdometry = hwMap.get(DcMotorEx.class, "leftDead");
-//        rightOdometry = hwMap.get(DcMotorEx.class, "rightDead");
+        leftDrive = hwMap.get(DcMotorEx.class, "leftMotor");
+        rightDrive = hwMap.get(DcMotorEx.class, "rightMotor");
+        backDrive = hwMap.get(DcMotorEx.class, "backMotor");
+
+        frontOdometry = hwMap.get(DcMotorEx.class, "frontDead");
+        leftOdometry = hwMap.get(DcMotorEx.class, "leftDead");
+        rightOdometry = hwMap.get(DcMotorEx.class, "rightDead");
         otos = hwMap.get(SparkFunOTOS.class, "laser");
 
         otos.begin();
@@ -55,33 +55,33 @@ public class Drivetrain implements DriveConstants {
     public void drive(Vector driveInput, double turn) {
         double power = driveInput.magnitude();
         double angle = driveInput.angle();
-//
-//        leftDrive.setPower(turn + power * Math.cos(angle + LEFT_DRIVE_OFFSET - pose.angle));
-//        rightDrive.setPower(turn + power * Math.cos(angle + RIGHT_DRIVE_OFFSET - pose.angle));
-//        backDrive.setPower(turn + power * Math.cos(angle + BACK_DRIVE_OFFSET - pose.angle));
+
+        leftDrive.setPower(turn + power * Math.cos(angle + LEFT_DRIVE_OFFSET - pose.angle));
+        rightDrive.setPower(turn + power * Math.cos(angle + RIGHT_DRIVE_OFFSET - pose.angle));
+        backDrive.setPower(turn + power * Math.cos(angle + BACK_DRIVE_OFFSET - pose.angle));
     }
 
     public void update() {
-///*        int currentLeft = leftOdometry.getCurrentPosition();
-//        int currentRight = rightOdometry.getCurrentPosition();
-//        int currentFront = frontOdometry.getCurrentPosition();*/
-//
-//        double deltaX = (currentLeft - previousLeftPosition + currentRight - previousRightPosition) *
-//                INCHES_PER_TICK * STRAFE_ODOMETRY_CORRECTION;
-//        double deltaY = (currentFront - previousFrontPosition) *
-//                INCHES_PER_TICK * FORWARD_ODOMETRY_CORRECTION;
-//
-//        pose.angle = imuOffset + getCorrectedYaw();
-//
-//        double averagedHeading = Angles.average(pose.angle, previousHeading);
-//
-//        pose.x += deltaX * Math.sin(averagedHeading) + deltaY * Math.cos(averagedHeading);
-//        pose.y += -deltaX * Math.cos(averagedHeading) + deltaY * Math.sin(averagedHeading);
-//
-//        previousLeftPosition = currentLeft;
-//        previousRightPosition = currentRight;
-//        previousFrontPosition = currentFront;
-//        previousHeading = pose.angle;
+        int currentLeft = leftOdometry.getCurrentPosition();
+        int currentRight = rightOdometry.getCurrentPosition();
+        int currentFront = frontOdometry.getCurrentPosition();
+
+        double deltaX = (currentLeft - previousLeftPosition + currentRight - previousRightPosition) *
+                INCHES_PER_TICK * STRAFE_ODOMETRY_CORRECTION;
+        double deltaY = (currentFront - previousFrontPosition) *
+                INCHES_PER_TICK * FORWARD_ODOMETRY_CORRECTION;
+
+        pose.angle = imuOffset + getCorrectedYaw();
+
+        double averagedHeading = Angles.average(pose.angle, previousHeading);
+
+        pose.x += deltaX * Math.sin(averagedHeading) + deltaY * Math.cos(averagedHeading);
+        pose.y += -deltaX * Math.cos(averagedHeading) + deltaY * Math.sin(averagedHeading);
+
+        previousLeftPosition = currentLeft;
+        previousRightPosition = currentRight;
+        previousFrontPosition = currentFront;
+        previousHeading = pose.angle;
     }
 
 
