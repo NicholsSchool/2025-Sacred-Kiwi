@@ -3,13 +3,9 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.constants.DriveConstants;
 import org.firstinspires.ftc.teamcode.math_utils.Angles;
-import org.firstinspires.ftc.teamcode.math_utils.VectorMotionProfile;
-import org.firstinspires.ftc.teamcode.math_utils.MotionProfile;
 import org.firstinspires.ftc.teamcode.math_utils.Vector;
 import org.firstinspires.ftc.teamcode.math_utils.RobotPose;
-import org.firstinspires.ftc.teamcode.math_utils.SimpleFeedbackController;
 
-import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;

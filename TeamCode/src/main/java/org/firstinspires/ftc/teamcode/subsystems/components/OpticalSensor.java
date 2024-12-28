@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.math_utils.Vector;
 public class OpticalSensor {
 
     private final SparkFunOTOS otos;
+    private SparkFunOTOS.Pose2D lastPos;
     private SparkFunOTOS.Pose2D pos;
 
     /**
@@ -38,6 +39,7 @@ public class OpticalSensor {
      * Updates the sensor position data, run every loop when using getPosition or getHeading.
      */
     public void update() {
+        lastPos = pos; //save the last position before updating the current one.
         pos = otos.getPosition();
     }
 
@@ -48,6 +50,8 @@ public class OpticalSensor {
     public Vector getPosition() {
         return new Vector(pos.x, pos.y);
     }
+
+    public Vector getDeltas() { return new Vector(pos.x - lastPos.x, pos.y - lastPos.y); }
 
     /**
      * Returns the heading of the robot
